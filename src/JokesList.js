@@ -27,7 +27,7 @@ class JokesList extends Component {
                     if (!this.state.jokes.find(stJ => stJ.id === j.id)) {
                         this.setState(
                             {
-                                jokes: [...this.state.jokes, j]
+                                jokes: [...this.state.jokes, { ...j, score: 0 }]
                             }, () => this.setState({ isLoaded: true }))
                     }
                 })
@@ -35,6 +35,7 @@ class JokesList extends Component {
     }
 
     result = () => {
+        console.log(this.state)
         return !this.state.isLoaded ? <h1>Loading...</h1>
             : <div className="JokeList">
                 <div className="JokeList-sidebar">
@@ -47,6 +48,8 @@ class JokesList extends Component {
                 <div className="JokeList-jokes">
                     {this.state.jokes.map(j => (
                         <div key={j.id}>
+                            <button>upvote</button>
+                            <button>downvote</button>
                             {j.joke}
                         </div>
                     ))}
