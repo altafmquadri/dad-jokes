@@ -1,11 +1,12 @@
 import React from 'react';
+import JokesList from './JokesList'
 
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <h1>up and running</h1>
+      <JokesList />
     </div>
   );
 }
