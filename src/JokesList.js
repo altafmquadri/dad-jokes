@@ -13,7 +13,34 @@ class JokesList extends Component {
         isLoaded: false
     }
 
+    increaseScore = (id) => {
+        console.log('click', id)
+        this.setState(st => ({
+            jokes: st.jokes.map(stJ => {
+                if (stJ.id === id) {
+                    stJ.score++
+                    return stJ
+                } else {
+                    return stJ
+                }
+            })
+        }))
+    }
 
+
+    decreaseScore = (id) => {
+        console.log('click', id)
+        this.setState(st => ({
+            jokes: st.jokes.map(stJ => {
+                if (stJ.id === id) {
+                    stJ.score--
+                    return stJ
+                } else {
+                    return stJ
+                }
+            })
+        }))
+    }
 
     componentDidMount() {
         for (let i = 0; i < this.props.jokeNumber; i++) {
@@ -48,8 +75,13 @@ class JokesList extends Component {
                 <div className="JokeList-jokes">
                     {this.state.jokes.map(j => (
                         <div key={j.id}>
-                            <button>upvote</button>
-                            <button>downvote</button>
+                            <i
+                                onClick={() => this.increaseScore(j.id)}
+                                className="fas fa-arrow-up fa-2x"></i>
+                            <span>{j.score}</span>
+                            <i
+                                onClick={() => this.decreaseScore(j.id)}
+                                className="fas fa-arrow-down fa-2x"></i>
                             {j.joke}
                         </div>
                     ))}
