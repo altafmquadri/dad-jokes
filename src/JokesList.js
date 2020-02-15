@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './JokesList.css'
+import Joke from './Joke'
 
 
 const JokesApi = 'https://icanhazdadjoke.com/'
@@ -62,7 +63,6 @@ class JokesList extends Component {
     }
 
     result = () => {
-        console.log(this.state)
         return !this.state.isLoaded ? <h1>Loading...</h1>
             : <div className="JokeList">
                 <div className="JokeList-sidebar">
@@ -73,7 +73,11 @@ class JokesList extends Component {
                     <button className="JokeList-getmore">New Jokes</button>
                 </div>
                 <div className="JokeList-jokes">
-                    {this.state.jokes.map(j => (
+                    <Joke 
+                    jokes={this.state.jokes}
+                    increaseScore={this.increaseScore}
+                    decreaseScore={this.decreaseScore}/>
+                    {/* {this.state.jokes.map(j => (
                         <div key={j.id}>
                             <i
                                 onClick={() => this.increaseScore(j.id)}
@@ -84,7 +88,7 @@ class JokesList extends Component {
                                 className="fas fa-arrow-down fa-2x"></i>
                             {j.joke}
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             </div>
     }
