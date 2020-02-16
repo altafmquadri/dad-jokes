@@ -10,12 +10,11 @@ class JokesList extends Component {
         jokeNumber: 10
     }
     state = {
-        jokes: [],
+        jokes: JSON.parse(window.localStorage.getItem("jokes") || "[]"),
         isLoaded: false
     }
 
     increaseScore = (id) => {
-        console.log('click', id)
         this.setState(st => ({
             jokes: st.jokes.map(stJ => {
                 if (stJ.id === id) {
@@ -25,12 +24,11 @@ class JokesList extends Component {
                     return stJ
                 }
             })
-        }))
+        }), () => window.localStorage.setItem('jokes', JSON.stringify(this.state.jokes)))
     }
 
 
     decreaseScore = (id) => {
-        console.log('click', id)
         this.setState(st => ({
             jokes: st.jokes.map(stJ => {
                 if (stJ.id === id) {
@@ -40,10 +38,10 @@ class JokesList extends Component {
                     return stJ
                 }
             })
-        }))
+        }), () => window.localStorage.setItem('jokes', JSON.stringify(this.state.jokes)))
     }
 
-    componentDidMount() {
+    getJokes = () => {
         for (let i = 0; i < this.props.jokeNumber; i++) {
             fetch(JokesApi, {
                 headers: {
@@ -56,10 +54,23 @@ class JokesList extends Component {
                         this.setState(
                             {
                                 jokes: [...this.state.jokes, { ...j, score: 0 }]
-                            }, () => this.setState({ isLoaded: true }))
+                            }, st => {
+                                window.localStorage.setItem('jokes', JSON.stringify(this.state.jokes))
+                                this.setState({ isLoaded: true })
+                            }
+                        )
                     }
                 })
         }
+    }
+
+    getMoreJokes = () => {
+        this.setState({ isLoaded: false }, this.getJokes)
+    }
+
+    componentDidMount() {
+        if (this.state.jokes.length === 0) this.getJokes()
+        this.setState({ isLoaded: true });
     }
 
     result = () => {
@@ -70,7 +81,8 @@ class JokesList extends Component {
                         <span>Dad</span>Jokes
                     </h1>
                     <img alt="smiley face" src="https://assets.dryicons.com/uploads/icon/svg/8927/0eb14c71-38f2-433a-bfc8-23d9c99b3647.svg" />
-                    <button className="JokeList-getmore">New Jokes</button>
+                    <button onClick={this.getMoreJokes}
+                        className="JokeList-getmore">Fetch Jokes</button>
                 </div>
                 <div className="JokeList-jokes">
                     <Joke

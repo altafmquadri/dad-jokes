@@ -35,8 +35,9 @@ const Joke = (props) => {
             return 'em em-angry'
         }
     }
+    let jokes = props.jokes.sort((a, b) => b.score - a.score)
     return (
-        props.jokes.map(j => (
+        jokes.map(j => (
             <div key={j.id}
                 className='Joke'>
                 <div className="Joke-buttons">
@@ -51,7 +52,7 @@ const Joke = (props) => {
                 </div>
                 <div className="Joke-text">{j.joke}</div>
                 <div className="Joke-smiley">
-                    <i class={getEmoji(j.score)}
+                    <i className={getEmoji(j.score)}
                         aria-label={getEmoji(j.score)}>
                     </i>
                 </div>
