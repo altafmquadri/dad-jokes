@@ -73,22 +73,10 @@ class JokesList extends Component {
                     <button className="JokeList-getmore">New Jokes</button>
                 </div>
                 <div className="JokeList-jokes">
-                    <Joke 
-                    jokes={this.state.jokes}
-                    increaseScore={this.increaseScore}
-                    decreaseScore={this.decreaseScore}/>
-                    {/* {this.state.jokes.map(j => (
-                        <div key={j.id}>
-                            <i
-                                onClick={() => this.increaseScore(j.id)}
-                                className="fas fa-arrow-up fa-2x"></i>
-                            <span>{j.score}</span>
-                            <i
-                                onClick={() => this.decreaseScore(j.id)}
-                                className="fas fa-arrow-down fa-2x"></i>
-                            {j.joke}
-                        </div>
-                    ))} */}
+                    <Joke
+                        jokes={this.state.jokes}
+                        increaseScore={this.increaseScore}
+                        decreaseScore={this.decreaseScore} />
                 </div>
             </div>
     }
